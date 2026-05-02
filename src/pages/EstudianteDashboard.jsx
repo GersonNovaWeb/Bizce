@@ -1092,7 +1092,7 @@ const ChatTab = ({ user }) => {
 // ==========================================
 // 6. CONTROLADOR PRINCIPAL DEL DASHBOARD
 // ==========================================
-export const StudentDashboard = ({ progress, onSelectNode, user, logout, allCurriculums, selectedLevel, setSelectedLevel, scrollPos }) => {
+export const StudentDashboard = ({ progress, onSelectNode, onNavigate, user, logout, allCurriculums, selectedLevel, setSelectedLevel, scrollPos }) => {
   const [activeTab, setActiveTab] = useState('learn');
 
   useEffect(() => {
@@ -1301,6 +1301,36 @@ export const StudentDashboard = ({ progress, onSelectNode, user, logout, allCurr
                   </div>
                 </div>
               </div>
+
+              {/* ── Quick access ── */}
+              <div className="animFadeUp" style={{ animationDelay:'0.7s', marginTop:14, display:'grid', gridTemplateColumns:'repeat(3,1fr)', gap:14, paddingBottom:32 }}>
+                {[
+                  { route:'pronunciation', Icon:Ic.Mic,         label:'Laboratorio de Pronunciación', sub:'Web Speech · 880 frases', color:TOK.violet },
+                  { route:'errorDiary',    Icon:Ic.AlertCircle,  label:'Diario de Errores',            sub:'Repaso flashcard',        color:TOK.coral  },
+                  { route:'learningDiary', Icon:Ic.Calendar,     label:'Diario de Aprendizaje',        sub:'Racha · historial',       color:TOK.amber  },
+                ].map(item => (
+                  <button
+                    key={item.route}
+                    onClick={() => onNavigate?.(item.route)}
+                    className="hov"
+                    style={{
+                      padding:'18px 20px', background:TOK.surface,
+                      border:`1px solid ${TOK.border}`, borderRadius:12,
+                      display:'flex', flexDirection:'column', alignItems:'flex-start', gap:12,
+                      cursor:'pointer', textAlign:'left',
+                    }}
+                  >
+                    <div style={{ width:36, height:36, borderRadius:10, background:item.color+'22', border:`1px solid ${item.color}40`, display:'flex', alignItems:'center', justifyContent:'center', color:item.color }}>
+                      <item.Icon size={16}/>
+                    </div>
+                    <div>
+                      <div style={{ fontFamily:TOK.sans, fontSize:13, fontWeight:700, color:TOK.text }}>{item.label}</div>
+                      <div style={{ fontFamily:TOK.mono, fontSize:10, color:TOK.textDim, marginTop:3 }}>{item.sub}</div>
+                    </div>
+                  </button>
+                ))}
+              </div>
+
             </div>
           )}
 

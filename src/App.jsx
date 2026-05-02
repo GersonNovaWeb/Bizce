@@ -13,6 +13,9 @@ import { c2Curriculum, allC2NodeIds } from './data/c2_curriculum';
 import { StudentDashboard } from './pages/EstudianteDashboard';
 import { AdminDashboard } from './pages/AdminDashboard';
 import { TheoryScreen, ReadingScreen, QuizScreen, WorkshopScreen } from './pages/Screens';
+import PronunciationLab from './pages/PronunciationLab';
+import ErrorDiary from './pages/ErrorDiary';
+import LearningDiary from './pages/LearningDiary';
 
 const SERIF  = '"Fraunces", "Instrument Serif", Georgia, serif';
 const ITALIC = '"Instrument Serif", Georgia, serif';
@@ -411,12 +414,19 @@ export default function App() {
       return <QuizScreen node={activeNode} onBack={returnToDashboard} onComplete={(pts, grade) => completeCurrentNode(pts, grade)} onNext={(pts, grade) => goToNextNode(pts, grade)} hasNextNode={hasNextNode} updateGrade={updateGrade} />;
     case 'workshop':
       return <WorkshopScreen node={activeNode} onBack={returnToDashboard} onComplete={returnToDashboard} user={user} />;
+    case 'pronunciation':
+      return <PronunciationLab onBack={() => setCurrentRoute('dashboard')} />;
+    case 'errorDiary':
+      return <ErrorDiary onBack={() => setCurrentRoute('dashboard')} db={db} user={user} />;
+    case 'learningDiary':
+      return <LearningDiary onBack={() => setCurrentRoute('dashboard')} db={db} user={user} progress={progress} />;
     case 'dashboard':
     default:
       return (
         <StudentDashboard
           progress={progress}
           onSelectNode={navigateToNode}
+          onNavigate={setCurrentRoute}
           user={user}
           logout={handleLogout}
           curriculum={currentCurriculum}
