@@ -413,11 +413,11 @@ const MapTab = ({ progress, onSelectNode, curriculum }) => {
 
             {isDone(rn.id) ? (
               <button onClick={() => onSelectNode(rn)} style={{ width:'100%', padding:'10px 0', textAlign:'center', background:TOK.surface4, color:TOK.textDim, borderRadius:9, fontSize:13, fontWeight:700, display:'flex', alignItems:'center', justifyContent:'center', gap:6, border:`1px solid ${TOK.border}`, cursor:'pointer' }}>
-                <Ic.RotateCcw size={13}/> Tekrar et
+                <Ic.RotateCcw size={13}/> Repetir
               </button>
             ) : isLock(rn.id) ? (
               <div style={{ width:'100%', padding:'10px 0', textAlign:'center', background:TOK.surface3, color:TOK.textMute, borderRadius:9, fontSize:13, fontWeight:700, display:'flex', alignItems:'center', justifyContent:'center', gap:6 }}>
-                <Ic.Lock size={13}/> Kilitli
+                <Ic.Lock size={13}/> Bloqueado
               </div>
             ) : (
               <button onClick={() => onSelectNode(rn)} className="btn-pri hov" style={{ width:'100%', padding:'11px 0', textAlign:'center', background:TOK.indigo, color:'#fff', borderRadius:9, fontSize:13, fontWeight:700, display:'flex', alignItems:'center', justifyContent:'center', gap:6, boxShadow:`0 8px 24px -8px ${TOK.indigo}60`, border:'none', cursor:'pointer' }}>
@@ -427,7 +427,7 @@ const MapTab = ({ progress, onSelectNode, curriculum }) => {
           </div>
         ) : (
           <div style={{ padding:18, background:TOK.surface2, border:`1px solid ${TOK.border}`, borderRadius:12, textAlign:'center', color:TOK.textMute, fontFamily:TOK.serif, fontStyle:'italic', fontSize:14 }}>
-            Sol haritadan bir ders seç.
+            Selecciona una lección del mapa.
           </div>
         )}
 
@@ -683,7 +683,7 @@ const LibraryTab = ({ user }) => {
         <div style={{ fontFamily: TOK.mono, fontSize: 9.5, color: TOK.textMute, letterSpacing: 2, textTransform: 'uppercase', padding: '0 8px', marginBottom: 6 }}>Koleksiyonlar</div>
         {[
           { id: 'notas', label: 'Apuntes', count: notebookData.folders.length, Icon: Ic.Folder },
-          { id: 'diccionario', label: 'Sözcükler', count: dictWords.length, Icon: Ic.Book },
+          { id: 'diccionario', label: 'Palabras', count: dictWords.length, Icon: Ic.Book },
         ].map(({ id, label, count, Icon }) => (
           <div key={id} onClick={() => { setSubTab(id); setActiveFolderId(null); setActiveNoteId(null); }} className="hov" style={{ padding: '9px 12px', borderRadius: 8, marginBottom: 2, background: subTab === id ? TOK.indigoSoft : 'transparent', border: `1px solid ${subTab === id ? TOK.indigo + '40' : 'transparent'}`, display: 'flex', alignItems: 'center', gap: 9, cursor: 'pointer' }}>
             <Icon size={14} color={subTab === id ? TOK.indigoHi : TOK.textDim} />
@@ -708,7 +708,7 @@ const LibraryTab = ({ user }) => {
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 18 }}>
           <div>
             <h1 style={{ fontFamily: TOK.serif, fontSize: 32, fontWeight: 400, letterSpacing: -1.2, lineHeight: 1, margin: 0 }}>
-              <em style={{ color: TOK.indigoHi, fontFamily: TOK.italic }}>{subTab === 'notas' ? 'Apuntes' : 'Tüm'}</em>{subTab === 'notas' ? '' : ' sözcükler'}
+              <em style={{ color: TOK.indigoHi, fontFamily: TOK.italic }}>{subTab === 'notas' ? 'Apuntes' : 'Todas las'}</em>{subTab === 'notas' ? '' : ' palabras'}
             </h1>
             <div style={{ fontFamily: TOK.mono, fontSize: 11, color: TOK.textDim, letterSpacing: 1.2, marginTop: 6, fontWeight: 600 }}>
               {subTab === 'notas' ? `${notebookData.folders.length} klasör · ${totalNotes} not` : `${dictWords.length} öğe`}
@@ -718,7 +718,7 @@ const LibraryTab = ({ user }) => {
 
         {subTab === 'notas' && !activeFolderId && !activeNoteId && (
           <div>
-            {notebookData.folders.length === 0 && <div style={{ textAlign: 'center', padding: '40px 0', color: TOK.textMute, fontFamily: TOK.mono, fontSize: 12 }}>Klasör yok. Sol panelden ekleyin.</div>}
+            {notebookData.folders.length === 0 && <div style={{ textAlign: 'center', padding: '40px 0', color: TOK.textMute, fontFamily: TOK.mono, fontSize: 12 }}>Sin carpetas. Añade desde el panel izquierdo.</div>}
             {notebookData.folders.map((folder, i) => (
               <div key={folder.id} className="hov" onClick={() => setActiveFolderId(folder.id)} style={{ padding: '12px 14px', borderBottom: `1px solid ${TOK.border}50`, display: 'flex', alignItems: 'center', gap: 14, cursor: 'pointer', borderLeft: '2px solid transparent' }}>
                 <Ic.Folder size={16} color={TOK.indigoHi} />
@@ -739,11 +739,11 @@ const LibraryTab = ({ user }) => {
               <div style={{ fontFamily: TOK.serif, fontSize: 18, fontStyle: 'italic', fontWeight: 500 }}>{activeFolder?.name}</div>
               <button onClick={handleCreateNote} style={{ marginLeft: 'auto', padding: '6px 11px', background: TOK.indigoSoft, border: `1px solid ${TOK.indigo}40`, borderRadius: 7, color: TOK.indigoHi, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 5, fontSize: 12, fontWeight: 700 }}><Ic.Plus size={12} /> Yeni Not</button>
             </div>
-            {(!activeFolder?.notes || activeFolder.notes.length === 0) && <div style={{ textAlign: 'center', padding: '40px 0', color: TOK.textMute, fontFamily: TOK.mono, fontSize: 12 }}>Klasör boş.</div>}
+            {(!activeFolder?.notes || activeFolder.notes.length === 0) && <div style={{ textAlign: 'center', padding: '40px 0', color: TOK.textMute, fontFamily: TOK.mono, fontSize: 12 }}>Carpeta vacía.</div>}
             {activeFolder?.notes?.map((note) => (
               <div key={note.id} className="hov" onClick={() => { setActiveNoteId(note.id); setCurrentNoteTitle(note.title); setCurrentNoteContent(note.content); }} style={{ padding: '12px 14px', borderBottom: `1px solid ${TOK.border}50`, display: 'flex', alignItems: 'center', gap: 14, cursor: 'pointer' }}>
                 <Ic.FileText size={14} color={TOK.textDim} />
-                <div style={{ flex: 1 }}><div style={{ fontFamily: TOK.serif, fontSize: 15, fontWeight: 500 }}>{note.title || 'Başlıksız'}</div></div>
+                <div style={{ flex: 1 }}><div style={{ fontFamily: TOK.serif, fontSize: 15, fontWeight: 500 }}>{note.title || 'Sin título'}</div></div>
                 <button onClick={e => { e.stopPropagation(); handleDeleteNote(activeFolder.id, note.id); }} style={{ color: TOK.textMute, background: 'transparent', border: 'none', cursor: 'pointer', padding: 4 }}><Ic.Trash size={13} /></button>
               </div>
             ))}
@@ -754,10 +754,10 @@ const LibraryTab = ({ user }) => {
           <div style={{ display: 'flex', flexDirection: 'column', height: 'calc(100vh - 160px)' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 16 }}>
               <button onClick={handleSaveCurrentNote} style={{ padding: '6px 10px', background: TOK.surface3, border: `1px solid ${TOK.border}`, borderRadius: 7, color: TOK.textDim, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 5 }}><Ic.Back size={13} /></button>
-              <input type="text" value={currentNoteTitle} onChange={e => setCurrentNoteTitle(e.target.value)} style={{ flex: 1, background: 'transparent', border: 'none', borderBottom: `2px solid ${TOK.border}`, padding: '4px 0', fontFamily: TOK.serif, fontSize: 22, fontWeight: 700, color: TOK.text, outline: 'none' }} onFocus={e => e.target.style.borderColor = TOK.indigo} onBlur={e => e.target.style.borderColor = TOK.border} placeholder="Not başlığı..." />
+              <input type="text" value={currentNoteTitle} onChange={e => setCurrentNoteTitle(e.target.value)} style={{ flex: 1, background: 'transparent', border: 'none', borderBottom: `2px solid ${TOK.border}`, padding: '4px 0', fontFamily: TOK.serif, fontSize: 22, fontWeight: 700, color: TOK.text, outline: 'none' }} onFocus={e => e.target.style.borderColor = TOK.indigo} onBlur={e => e.target.style.borderColor = TOK.border} placeholder="Título de la nota..." />
               <button onClick={handleSaveCurrentNote} style={{ padding: '6px 11px', background: TOK.indigo, border: 'none', borderRadius: 7, color: '#fff', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 5, fontSize: 12, fontWeight: 700 }}><Ic.Save size={12} /> Kaydet</button>
             </div>
-            <textarea value={currentNoteContent} onChange={e => setCurrentNoteContent(e.target.value)} placeholder="Not içeriği..." style={{ flex: 1, width: '100%', background: TOK.bg, border: `1px solid ${TOK.border}`, borderRadius: 10, padding: '16px 18px', fontFamily: TOK.serif, fontStyle: 'italic', fontSize: 16, color: TOK.textSec, resize: 'none', outline: 'none', lineHeight: 1.7 }} onFocus={e => e.target.style.borderColor = TOK.indigo} onBlur={e => e.target.style.borderColor = TOK.border} />
+            <textarea value={currentNoteContent} onChange={e => setCurrentNoteContent(e.target.value)} placeholder="Contenido de la nota..." style={{ flex: 1, width: '100%', background: TOK.bg, border: `1px solid ${TOK.border}`, borderRadius: 10, padding: '16px 18px', fontFamily: TOK.serif, fontStyle: 'italic', fontSize: 16, color: TOK.textSec, resize: 'none', outline: 'none', lineHeight: 1.7 }} onFocus={e => e.target.style.borderColor = TOK.indigo} onBlur={e => e.target.style.borderColor = TOK.border} />
           </div>
         )}
 
@@ -803,17 +803,17 @@ const LibraryTab = ({ user }) => {
           <div>
             <div style={{ fontFamily: TOK.mono, fontSize: 10, color: TOK.textMute, letterSpacing: 2, textTransform: 'uppercase', marginBottom: 12 }}>Not istatistikleri</div>
             <div className="animScaleIn" style={{ padding: 16, background: `linear-gradient(180deg, ${TOK.indigoSoft}, ${TOK.surface2})`, border: `1px solid ${TOK.indigo}40`, borderRadius: 11, marginBottom: 14 }}>
-              <div style={{ fontFamily: TOK.mono, fontSize: 9.5, color: TOK.indigoHi, letterSpacing: 1.5, textTransform: 'uppercase', fontWeight: 700 }}>{notebookData.folders.length} Klasör</div>
+              <div style={{ fontFamily: TOK.mono, fontSize: 9.5, color: TOK.indigoHi, letterSpacing: 1.5, textTransform: 'uppercase', fontWeight: 700 }}>{notebookData.folders.length} Carpetas</div>
               <div style={{ fontFamily: TOK.serif, fontSize: 32, fontWeight: 500, color: TOK.indigoHi, marginTop: 4, letterSpacing: -0.8 }}>{totalNotes}</div>
-              <div style={{ fontFamily: TOK.mono, fontSize: 10, color: TOK.textDim, marginTop: 2 }}>toplam not</div>
+              <div style={{ fontFamily: TOK.mono, fontSize: 10, color: TOK.textDim, marginTop: 2 }}>notas totales</div>
             </div>
-            {isSaving && <div style={{ display: 'flex', alignItems: 'center', gap: 7, color: TOK.textMute, fontFamily: TOK.mono, fontSize: 11 }}><Ic.Loader2 size={12} style={{ animation: 'spin 1s linear infinite' }} /> Kaydediliyor...</div>}
+            {isSaving && <div style={{ display: 'flex', alignItems: 'center', gap: 7, color: TOK.textMute, fontFamily: TOK.mono, fontSize: 11 }}><Ic.Loader2 size={12} style={{ animation: 'spin 1s linear infinite' }} /> Guardando...</div>}
           </div>
         ) : (
           <div>
             <div style={{ fontFamily: TOK.mono, fontSize: 10, color: TOK.textMute, letterSpacing: 2, textTransform: 'uppercase', marginBottom: 12 }}>Sözcük istatistikleri</div>
             <div className="animScaleIn" style={{ padding: 16, background: `linear-gradient(180deg, ${TOK.indigoSoft}, ${TOK.surface2})`, border: `1px solid ${TOK.indigo}40`, borderRadius: 11, marginBottom: 16 }}>
-              <div style={{ fontFamily: TOK.mono, fontSize: 9.5, color: TOK.indigoHi, letterSpacing: 1.5, textTransform: 'uppercase', fontWeight: 700 }}>Toplam sözcük</div>
+              <div style={{ fontFamily: TOK.mono, fontSize: 9.5, color: TOK.indigoHi, letterSpacing: 1.5, textTransform: 'uppercase', fontWeight: 700 }}>Total palabras</div>
               <div style={{ fontFamily: TOK.serif, fontSize: 36, fontWeight: 500, color: TOK.indigoHi, marginTop: 4, letterSpacing: -1 }}>{dictWords.length}</div>
               <div style={{ marginTop: 10 }}><ABar value={Math.min(100, (dictWords.length / 50) * 100)} color={TOK.indigo} h={3} delay={300} /></div>
             </div>
@@ -834,14 +834,14 @@ const LibraryTab = ({ user }) => {
       <div style={{ padding: '12px 18px 10px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
         <div>
           <div style={{ fontFamily: TOK.mono, fontSize: 9, color: TOK.textMute, letterSpacing: 1.8, textTransform: 'uppercase', fontWeight: 700 }}>Kitaplık</div>
-          <h1 style={{ fontFamily: TOK.serif, fontSize: 26, fontWeight: 400, letterSpacing: -0.8, lineHeight: 1, margin: '2px 0 0' }}>{subTab === 'notas' ? 'Apuntes' : 'Sözcükler'}</h1>
+          <h1 style={{ fontFamily: TOK.serif, fontSize: 26, fontWeight: 400, letterSpacing: -0.8, lineHeight: 1, margin: '2px 0 0' }}>{subTab === 'notas' ? 'Apuntes' : 'Palabras'}</h1>
         </div>
         <Ic.Search size={18} color={TOK.textDim} />
       </div>
 
       {/* Filter chips */}
       <div style={{ padding: '0 18px 12px', display: 'flex', gap: 6, overflowX: 'auto' }} className="noscroll">
-        {[{ id: 'notas', label: 'Apuntes' }, { id: 'diccionario', label: 'Sözcükler' }].map(({ id, label }) => (
+        {[{ id: 'notas', label: 'Apuntes' }, { id: 'diccionario', label: 'Palabras' }].map(({ id, label }) => (
           <div key={id} onClick={() => { setSubTab(id); setActiveFolderId(null); setActiveNoteId(null); }} style={{ padding: '6px 11px', background: subTab === id ? TOK.indigoSoft : TOK.surface, border: `1px solid ${subTab === id ? TOK.indigo + '50' : TOK.border}`, borderRadius: 100, fontSize: 11.5, fontWeight: 600, color: subTab === id ? TOK.indigoHi : TOK.textSec, whiteSpace: 'nowrap', flexShrink: 0, cursor: 'pointer' }}>{label}</div>
         ))}
       </div>
@@ -880,12 +880,12 @@ const LibraryTab = ({ user }) => {
               <span style={{ fontFamily: TOK.serif, fontStyle: 'italic', fontSize: 16, fontWeight: 500 }}>{activeFolder?.name}</span>
               <button onClick={handleCreateNote} style={{ marginLeft: 'auto', padding: '6px 10px', background: TOK.indigoSoft, border: `1px solid ${TOK.indigo}40`, borderRadius: 7, color: TOK.indigoHi, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 4, fontSize: 12 }}><Ic.Plus size={12} /> Not</button>
             </div>
-            {(!activeFolder?.notes || activeFolder.notes.length === 0) && <div style={{ textAlign: 'center', padding: '30px 0', color: TOK.textMute, fontFamily: TOK.mono, fontSize: 11 }}>Klasör boş.</div>}
+            {(!activeFolder?.notes || activeFolder.notes.length === 0) && <div style={{ textAlign: 'center', padding: '30px 0', color: TOK.textMute, fontFamily: TOK.mono, fontSize: 11 }}>Carpeta vacía.</div>}
             {activeFolder?.notes?.map((note, i) => (
               <div key={note.id} className="animFadeUp" style={{ animationDelay: `${i * 0.05}s`, padding: '12px 14px', background: TOK.surface, border: `1px solid ${TOK.border}`, borderRadius: 10, marginBottom: 7, display: 'flex', alignItems: 'center', gap: 10 }}>
                 <Ic.FileText size={14} color={TOK.textDim} />
                 <div style={{ flex: 1, minWidth: 0, cursor: 'pointer' }} onClick={() => { setActiveNoteId(note.id); setCurrentNoteTitle(note.title); setCurrentNoteContent(note.content); }}>
-                  <div style={{ fontFamily: TOK.serif, fontSize: 14, fontWeight: 500 }}>{note.title || 'Başlıksız'}</div>
+                  <div style={{ fontFamily: TOK.serif, fontSize: 14, fontWeight: 500 }}>{note.title || 'Sin título'}</div>
                 </div>
                 <button onClick={() => handleDeleteNote(activeFolder.id, note.id)} style={{ color: TOK.textMute, background: 'transparent', border: 'none', cursor: 'pointer', padding: 4 }}><Ic.Trash size={14} /></button>
               </div>
@@ -898,10 +898,10 @@ const LibraryTab = ({ user }) => {
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 12 }}>
               <button onClick={handleSaveCurrentNote} style={{ padding: '6px 10px', background: TOK.surface3, border: `1px solid ${TOK.border}`, borderRadius: 7, color: TOK.textDim, cursor: 'pointer', display: 'flex', alignItems: 'center' }}><Ic.Back size={14} /></button>
-              <input type="text" value={currentNoteTitle} onChange={e => setCurrentNoteTitle(e.target.value)} style={{ flex: 1, background: 'transparent', border: 'none', borderBottom: `1px solid ${TOK.border}`, padding: '4px 0', fontFamily: TOK.serif, fontSize: 18, fontWeight: 700, color: TOK.text, outline: 'none' }} placeholder="Başlık..." />
+              <input type="text" value={currentNoteTitle} onChange={e => setCurrentNoteTitle(e.target.value)} style={{ flex: 1, background: 'transparent', border: 'none', borderBottom: `1px solid ${TOK.border}`, padding: '4px 0', fontFamily: TOK.serif, fontSize: 18, fontWeight: 700, color: TOK.text, outline: 'none' }} placeholder="Título..." />
               <button onClick={handleSaveCurrentNote} style={{ padding: '7px 10px', background: TOK.indigo, border: 'none', borderRadius: 8, color: '#fff', cursor: 'pointer', display: 'flex', alignItems: 'center' }}><Ic.Save size={14} /></button>
             </div>
-            <textarea value={currentNoteContent} onChange={e => setCurrentNoteContent(e.target.value)} placeholder="Not içeriği..." style={{ width: '100%', height: 300, background: TOK.surface, border: `1px solid ${TOK.border}`, borderRadius: 10, padding: '12px 14px', fontFamily: TOK.serif, fontStyle: 'italic', fontSize: 15, color: TOK.textSec, resize: 'none', outline: 'none', lineHeight: 1.7 }} />
+            <textarea value={currentNoteContent} onChange={e => setCurrentNoteContent(e.target.value)} placeholder="Contenido de la nota..." style={{ width: '100%', height: 300, background: TOK.surface, border: `1px solid ${TOK.border}`, borderRadius: 10, padding: '12px 14px', fontFamily: TOK.serif, fontStyle: 'italic', fontSize: 15, color: TOK.textSec, resize: 'none', outline: 'none', lineHeight: 1.7 }} />
           </div>
         )}
 
@@ -998,7 +998,7 @@ const ChatTab = ({ user }) => {
               <span style={{ fontFamily: TOK.serif, fontSize: 13.5, fontStyle: 'italic', fontWeight: 600 }}>Tutor</span>
               <span style={{ fontFamily: TOK.mono, fontSize: 9, color: TOK.textMute, fontWeight: 600 }}>şimdi</span>
             </div>
-            <div style={{ fontSize: 11.5, color: TOK.textDim, marginTop: 2, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>Öğretmen sohbeti</div>
+            <div style={{ fontSize: 11.5, color: TOK.textDim, marginTop: 2, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>Chat con el tutor</div>
           </div>
         </div>
       </div>
@@ -1033,7 +1033,7 @@ const ChatTab = ({ user }) => {
         </div>
         <div style={{ padding: '14px 24px 18px', borderTop: `1px solid ${TOK.border}`, flexShrink: 0 }}>
           <form onSubmit={handleSend} style={{ display: 'flex', gap: 8 }}>
-            <input type="text" value={text} onChange={e => setText(e.target.value)} placeholder="İspanyolca yaz…" style={{ flex: 1, padding: '12px 14px', background: TOK.surface, border: `1px solid ${TOK.border}`, borderRadius: 10, color: TOK.text, fontFamily: TOK.serif, fontStyle: 'italic', fontSize: 14, outline: 'none' }} onFocus={e => e.target.style.borderColor = TOK.indigo} onBlur={e => e.target.style.borderColor = TOK.border} />
+            <input type="text" value={text} onChange={e => setText(e.target.value)} placeholder="Escribe en español…" style={{ flex: 1, padding: '12px 14px', background: TOK.surface, border: `1px solid ${TOK.border}`, borderRadius: 10, color: TOK.text, fontFamily: TOK.serif, fontStyle: 'italic', fontSize: 14, outline: 'none' }} onFocus={e => e.target.style.borderColor = TOK.indigo} onBlur={e => e.target.style.borderColor = TOK.border} />
             <button type="submit" disabled={!text.trim()} style={{ padding: '10px 14px', background: TOK.indigo, border: 'none', borderRadius: 10, color: '#fff', cursor: 'pointer', opacity: !text.trim() ? 0.5 : 1 }}><Ic.Send size={16} /></button>
           </form>
         </div>

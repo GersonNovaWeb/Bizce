@@ -47,13 +47,13 @@ const LoginScreen = () => {
     } catch (err) {
       console.error(err);
       if (err.code === 'auth/invalid-credential' || err.code === 'auth/wrong-password') {
-        setError("Error: El correo o la contraseña son incorrectos.");
+        setError("Hata: E-posta veya şifre yanlış.");
       } else if (err.code === 'auth/email-already-in-use') {
-        setError("Error: Este correo ya tiene una cuenta registrada.");
+        setError("Hata: Bu e-posta ile zaten bir hesap var.");
       } else if (err.code === 'auth/weak-password') {
-        setError("Error: La contraseña debe tener al menos 6 caracteres.");
+        setError("Hata: Şifre en az 6 karakter olmalı.");
       } else {
-        setError("Ocurrió un error inesperado. Inténtalo de nuevo.");
+        setError("Beklenmedik bir hata oluştu. Tekrar dene.");
       }
     } finally {
       setIsLoading(false);
@@ -88,17 +88,17 @@ const LoginScreen = () => {
         <div style={{ position: 'relative' }}>
           <div style={{ fontFamily: MONO, fontSize: 10.5, color: '#818cf8', letterSpacing: '0.24em', textTransform: 'uppercase', marginBottom: 18, display: 'flex', alignItems: 'center', gap: 10 }}>
             <span style={{ width: 24, height: 1, background: '#818cf8', display: 'inline-block' }}/>
-            Español · A1 → C2
+            İspanyolca · A1 → C2
           </div>
           <h1 style={{ fontFamily: SERIF, fontSize: 72, fontWeight: 400, lineHeight: 0.95, letterSpacing: -2.5, margin: '0 0 24px', color: '#eef0f6' }}>
-            Domina el <em style={{ fontStyle: 'italic', color: '#818cf8', fontFamily: ITALIC }}>español</em>.<br/>
-            Conquista el mundo.
+            İspanyolcaya <em style={{ fontStyle: 'italic', color: '#818cf8', fontFamily: ITALIC }}>hükmet</em>.<br/>
+            Dünyayı fethet.
           </h1>
           <p style={{ fontFamily: SERIF, fontSize: 17, fontWeight: 300, lineHeight: 1.6, color: '#b3b5c2', maxWidth: 460, margin: 0 }}>
-            El sistema académico diseñado para llevarte desde tu primera palabra hasta el bilingüismo perfecto.
+            Seni ilk kelimenden mükemmel iki dilliliğe götürmek için tasarlanmış akademik sistem.
           </p>
           <div style={{ display: 'flex', gap: 32, marginTop: 36 }}>
-            {[['340', 'Lecciones'], ['12k+', 'Alumnos'], ['6', 'Niveles']].map(([n, l]) => (
+            {[['340', 'Ders'], ['12k+', 'Öğrenci'], ['6', 'Seviye']].map(([n, l]) => (
               <div key={l}>
                 <div style={{ fontFamily: SERIF, fontSize: 30, fontWeight: 500, color: '#eef0f6', letterSpacing: -1, lineHeight: 1 }}>{n}</div>
                 <div style={{ fontFamily: MONO, fontSize: 9.5, color: '#54566a', letterSpacing: '0.18em', textTransform: 'uppercase', marginTop: 5 }}>{l}</div>
@@ -130,22 +130,22 @@ const LoginScreen = () => {
               onClick={() => { setIsRegistering(false); setError(''); }}
               style={{ flex: 1, padding: '10px 0', textAlign: 'center', borderRadius: 9, fontSize: 13, fontWeight: 700, border: 'none', transition: 'all 0.2s', background: !isRegistering ? '#1d1d28' : 'transparent', color: !isRegistering ? '#eef0f6' : '#7e8090', boxShadow: !isRegistering ? '0 0 0 1px #3a3a4e' : 'none' }}
             >
-              Iniciar Sesión
+              Giriş Yap
             </button>
             <button
               type="button"
               onClick={() => { setIsRegistering(true); setError(''); }}
               style={{ flex: 1, padding: '10px 0', textAlign: 'center', borderRadius: 9, fontSize: 13, fontWeight: 700, border: 'none', transition: 'all 0.2s', background: isRegistering ? '#1d1d28' : 'transparent', color: isRegistering ? '#eef0f6' : '#7e8090', boxShadow: isRegistering ? '0 0 0 1px #3a3a4e' : 'none' }}
             >
-              Crear Cuenta
+              Hesap Oluştur
             </button>
           </div>
 
           <h2 style={{ fontFamily: SERIF, fontSize: 36, fontWeight: 400, letterSpacing: -1, lineHeight: 1.05, margin: '0 0 8px', color: '#eef0f6' }}>
-            {isRegistering ? 'Únete a Bizce.' : 'Bienvenido de nuevo.'}
+            {isRegistering ? 'Bizce\'ye katıl.' : 'Tekrar hoş geldiniz.'}
           </h2>
           <p style={{ fontSize: 13.5, color: '#7e8090', margin: '0 0 28px' }}>
-            {isRegistering ? 'Empieza tu camino hacia el español hoy.' : 'Accede a tu biblioteca de español.'}
+            {isRegistering ? 'Bugün İspanyolca yolculuğuna başla.' : 'İspanyolca kütüphanene eriş.'}
           </p>
 
           {error && (
@@ -158,13 +158,13 @@ const LoginScreen = () => {
           <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
             <div>
               <label style={{ fontFamily: MONO, fontSize: 9.5, color: '#7e8090', textTransform: 'uppercase', letterSpacing: '0.2em', fontWeight: 700, display: 'block', marginBottom: 6 }}>
-                Correo electrónico
+                E-posta
               </label>
               <div style={{ position: 'relative' }}>
                 <Mail style={{ position: 'absolute', left: 14, top: '50%', transform: 'translateY(-50%)', width: 15, height: 15, color: '#54566a' }}/>
                 <input
                   type="email"
-                  placeholder="tu@correo.com"
+                  placeholder="eposta@adresin.com"
                   value={email}
                   onChange={e => setEmail(e.target.value)}
                   required
@@ -176,7 +176,7 @@ const LoginScreen = () => {
             </div>
             <div>
               <label style={{ fontFamily: MONO, fontSize: 9.5, color: '#7e8090', textTransform: 'uppercase', letterSpacing: '0.2em', fontWeight: 700, display: 'block', marginBottom: 6 }}>
-                Contraseña
+                Şifre
               </label>
               <div style={{ position: 'relative' }}>
                 <Lock style={{ position: 'absolute', left: 14, top: '50%', transform: 'translateY(-50%)', width: 15, height: 15, color: '#54566a' }}/>
@@ -197,10 +197,10 @@ const LoginScreen = () => {
             {isRegistering && (
               <div style={{ display: 'flex', background: '#111118', padding: 4, borderRadius: 10, border: '1px solid #272735', marginTop: 4 }}>
                 <button type="button" onClick={() => setRole('student')} style={{ flex: 1, padding: '10px 0', borderRadius: 8, fontWeight: 700, fontSize: 13, border: 'none', transition: 'all 0.2s', background: role === 'student' ? '#6366f1' : 'transparent', color: role === 'student' ? '#fff' : '#7e8090' }}>
-                  Soy Alumno
+                  Öğrenciyim
                 </button>
                 <button type="button" onClick={() => setRole('admin')} style={{ flex: 1, padding: '10px 0', borderRadius: 8, fontWeight: 700, fontSize: 13, border: 'none', transition: 'all 0.2s', background: role === 'admin' ? '#6366f1' : 'transparent', color: role === 'admin' ? '#fff' : '#7e8090' }}>
-                  Soy Profesor
+                  Öğretmenim
                 </button>
               </div>
             )}
@@ -224,7 +224,7 @@ const LoginScreen = () => {
                 <div style={{ width: 20, height: 20, border: '2px solid rgba(255,255,255,0.3)', borderTop: '2px solid #fff', borderRadius: '50%', animation: 'spin 0.8s linear infinite' }}/>
               ) : (
                 <>
-                  {isRegistering ? 'Crear mi cuenta' : 'Entrar a la plataforma'}
+                  {isRegistering ? 'Hesabımı oluştur' : 'Platforma giriş yap'}
                   <ArrowRight style={{ width: 17, height: 17 }}/>
                 </>
               )}
@@ -232,14 +232,14 @@ const LoginScreen = () => {
           </form>
 
           <p style={{ marginTop: 28, textAlign: 'center', fontSize: 13, color: '#54566a' }}>
-            {isRegistering ? '¿Ya tienes una cuenta?' : '¿No tienes cuenta?'}
+            {isRegistering ? 'Hesabın var mı?' : 'Hesabın yok mu?'}
             <button
               onClick={() => { setIsRegistering(!isRegistering); setError(''); }}
               style={{ marginLeft: 6, background: 'none', border: 'none', color: '#818cf8', fontWeight: 700, fontSize: 13, cursor: 'pointer', transition: 'color 0.2s' }}
               onMouseEnter={e => e.currentTarget.style.color = '#a78bfa'}
               onMouseLeave={e => e.currentTarget.style.color = '#818cf8'}
             >
-              {isRegistering ? 'Inicia sesión aquí' : 'Regístrate ahora'}
+              {isRegistering ? 'Buradan giriş yap' : 'Şimdi kayıt ol'}
             </button>
           </p>
         </div>
@@ -386,7 +386,7 @@ export default function App() {
   if (authLoading) return (
     <div style={{ minHeight: '100vh', background: '#0a0a0f', display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', gap: 16 }}>
       <div style={{ width: 40, height: 40, border: '3px solid #272735', borderTop: '3px solid #6366f1', borderRadius: '50%', animation: 'spin 0.8s linear infinite' }}/>
-      <p style={{ color: '#818cf8', fontFamily: '"JetBrains Mono", monospace', fontSize: 12, letterSpacing: '0.2em', textTransform: 'uppercase', margin: 0 }}>Cargando plataforma…</p>
+      <p style={{ color: '#818cf8', fontFamily: '"JetBrains Mono", monospace', fontSize: 12, letterSpacing: '0.2em', textTransform: 'uppercase', margin: 0 }}>Platform yükleniyor…</p>
     </div>
   );
   if (!user) return <LoginScreen />;
@@ -394,7 +394,7 @@ export default function App() {
   if (!progress) return (
     <div style={{ minHeight: '100vh', background: '#0a0a0f', display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', gap: 16 }}>
       <div style={{ width: 40, height: 40, border: '3px solid #272735', borderTop: '3px solid #6366f1', borderRadius: '50%', animation: 'spin 0.8s linear infinite' }}/>
-      <p style={{ color: '#818cf8', fontFamily: '"JetBrains Mono", monospace', fontSize: 12, letterSpacing: '0.2em', textTransform: 'uppercase', margin: 0 }}>Sincronizando progreso…</p>
+      <p style={{ color: '#818cf8', fontFamily: '"JetBrains Mono", monospace', fontSize: 12, letterSpacing: '0.2em', textTransform: 'uppercase', margin: 0 }}>İlerleme senkronize ediliyor…</p>
     </div>
   );
 
