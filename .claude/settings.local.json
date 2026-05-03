@@ -3,7 +3,10 @@
     "allow": [
       "Bash(dir \"C:\\\\Users\\\\ger_s\\\\OneDrive\\\\Desktop\\\\NOVA +\\\\mborayhu-espanol\\\\src\")",
       "Bash(npx vite *)",
-      "Bash(npm run *)"
+      "Bash(npm run *)",
+      "Bash(git add *)",
+      "Bash(git commit *)",
+      "Bash(git push *)"
     ]
   }
 }
