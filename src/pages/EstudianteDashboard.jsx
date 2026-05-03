@@ -12,6 +12,13 @@ import { playSpeech } from '../utils/audio';
 import logo from '../assets/logo.png';
 import { TOK, TR } from '../tokens';
 import { Ic, ABar, ProgressRing, BizceWordmark, PulseDot, useIsMobile } from '../components/BizceUI';
+import UnitPresentation from '../components/UnitPresentation';
+import { unitPresentationsA1 } from '../data/presentaciones/A1';
+import { unitPresentationsA2 } from '../data/presentaciones/A2';
+import { unitPresentationsB1 } from '../data/presentaciones/B1';
+import { unitPresentationsB2 } from '../data/presentaciones/B2';
+import { unitPresentationsC1 } from '../data/presentaciones/C1';
+import { unitPresentationsC2 } from '../data/presentaciones/C2';
 
 const firebaseConfig = typeof __firebase_config !== 'undefined' && __firebase_config ? JSON.parse(__firebase_config) : { apiKey: "mock", projectId: "mock" };
 const app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
@@ -1093,7 +1100,9 @@ const ChatTab = ({ user }) => {
 // 6. CONTROLADOR PRINCIPAL DEL DASHBOARD
 // ==========================================
 export const StudentDashboard = ({ progress, onSelectNode, onNavigate, user, logout, allCurriculums, selectedLevel, setSelectedLevel, scrollPos }) => {
-  const [activeTab, setActiveTab] = useState('learn');
+  const [activeTab,       setActiveTab]       = useState('learn');
+  const [pendingNode,     setPendingNode]      = useState(null);
+  const [presentationCtx, setPresentationCtx] = useState(null);
 
   useEffect(() => {
     if (!user || !progress || !db) return;
@@ -1167,6 +1176,34 @@ export const StudentDashboard = ({ progress, onSelectNode, onNavigate, user, log
   const greeting = hour < 12 ? TR.goodMorning : 'İyi günler';
   const dateStr = now.toLocaleDateString('tr-TR', { weekday:'long', day:'numeric', month:'long' });
   const currentLevelPct = currentLevelId ? getPct(currentLevelId) : 0;
+
+  // ── Presentation logic ────────────────────────────────────────────────────
+  const LEVEL_PRESENTATIONS = {
+    A1: unitPresentationsA1, A2: unitPresentationsA2,
+    B1: unitPresentationsB1, B2: unitPresentationsB2,
+    C1: unitPresentationsC1, C2: unitPresentationsC2,
+  };
+  const LEVEL_COLORS = {
+    A1: TOK.green,    A2: TOK.indigo,    B1: TOK.violet,
+    B2: TOK.textMute, C1: TOK.textMute,  C2: TOK.coral,
+  };
+
+  const handleNodeSelect = (node) => {
+    const curriculum = allCurriculums?.[selectedLevel];
+    if (!curriculum) { onSelectNode(node); return; }
+
+    const unit = curriculum.units.find(u => u.nodes.some(n => n.id === node.id));
+    if (!unit || unit.nodes[0]?.id !== node.id) { onSelectNode(node); return; }
+
+    const hasCompleted = unit.nodes.some(n => progress?.completedNodes?.includes(n.id));
+    if (hasCompleted) { onSelectNode(node); return; }
+
+    const presentation = LEVEL_PRESENTATIONS[selectedLevel]?.[unit.id];
+    if (!presentation) { onSelectNode(node); return; }
+
+    setPendingNode(node);
+    setPresentationCtx({ presentation, unit, levelId: selectedLevel });
+  };
 
   return (
     <>
@@ -1337,7 +1374,7 @@ export const StudentDashboard = ({ progress, onSelectNode, onNavigate, user, log
           {/* LEARN — Map view */}
           {activeTab === 'learn' && selectedLevel && (
             <div>
-              <MapTab progress={progress} onSelectNode={onSelectNode} curriculum={allCurriculums?.[selectedLevel]} />
+              <MapTab progress={progress} onSelectNode={handleNodeSelect} curriculum={allCurriculums?.[selectedLevel]} />
             </div>
           )}
 
@@ -1357,6 +1394,25 @@ export const StudentDashboard = ({ progress, onSelectNode, onNavigate, user, log
         </div>
 
       </div>
+
+      {pendingNode && presentationCtx && (
+        <UnitPresentation
+          presentation={presentationCtx.presentation}
+          unitTitle={presentationCtx.unit.title}
+          levelColor={LEVEL_COLORS[presentationCtx.levelId]}
+          levelId={presentationCtx.levelId}
+          onStart={() => {
+            const node = pendingNode;
+            setPendingNode(null);
+            setPresentationCtx(null);
+            onSelectNode(node);
+          }}
+          onBack={() => {
+            setPendingNode(null);
+            setPresentationCtx(null);
+          }}
+        />
+      )}
     </>
   );
 };
