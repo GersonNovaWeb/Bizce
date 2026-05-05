@@ -154,13 +154,13 @@ export const TheoryScreen = ({ node, onBack, onComplete, hasNextNode, onNext }) 
             )}
           </div>
 
-          <div style={{ position:'fixed', bottom:0, width:'100%', padding:'12px 18px 20px', borderTop:`1px solid ${TOK.border}`, background:'rgba(10,10,15,0.97)', backdropFilter:'blur(12px)' }}>
-            <div style={{ display:'flex', gap:10 }}>
-              <button onClick={onComplete} style={{ flex:1, padding:'13px 0', background:TOK.surface, border:`1px solid ${TOK.border}`, color:TOK.textSec, borderRadius:11, fontSize:13, fontWeight:700, cursor:'pointer' }}>
+          <div style={{ position:'fixed', bottom:0, width:'100%', padding:'10px 16px 20px', borderTop:`1px solid ${TOK.border}`, background:'rgba(10,10,15,0.97)', backdropFilter:'blur(12px)' }}>
+            <div className="flex gap-2">
+              <button onClick={onComplete} className="min-h-[44px]" style={{ flex:1, background:TOK.surface, border:`1px solid ${TOK.border}`, color:TOK.textSec, borderRadius:11, fontSize:13, fontWeight:700, cursor:'pointer' }}>
                 Tamamlandı
               </button>
               {hasNextNode && (
-                <button onClick={onNext} style={{ flex:1, padding:'13px 0', background:TOK.indigo, color:'#fff', borderRadius:11, fontSize:14, fontWeight:700, display:'flex', alignItems:'center', justifyContent:'center', gap:6, boxShadow:`0 8px 24px -8px ${TOK.indigo}60`, cursor:'pointer' }}>
+                <button onClick={onNext} className="min-h-[44px] flex items-center justify-center gap-1" style={{ flex:1, background:TOK.indigo, color:'#fff', borderRadius:11, fontSize:14, fontWeight:700, boxShadow:`0 8px 24px -8px ${TOK.indigo}60`, cursor:'pointer', border:'none' }}>
                   {TR.continue} <Ic.Arrow size={14}/>
                 </button>
               )}
@@ -299,11 +299,11 @@ export const ReadingScreen = ({ node, onBack, onComplete, hasNextNode, onNext })
             )}
           </div>
 
-          <div style={{ position:'fixed', bottom:0, width:'100%', padding:'12px 18px 20px', borderTop:`1px solid ${TOK.border}`, background:'rgba(10,10,15,0.97)', backdropFilter:'blur(12px)' }}>
-            <div style={{ display:'flex', gap:10 }}>
-              <button onClick={onComplete} style={{ flex:1, padding:'13px 0', background:TOK.surface, border:`1px solid ${TOK.border}`, color:TOK.textSec, borderRadius:11, fontSize:13, fontWeight:700, cursor:'pointer' }}>Okumayı bitir</button>
+          <div style={{ position:'fixed', bottom:0, width:'100%', padding:'10px 16px 20px', borderTop:`1px solid ${TOK.border}`, background:'rgba(10,10,15,0.97)', backdropFilter:'blur(12px)' }}>
+            <div className="flex gap-2">
+              <button onClick={onComplete} className="min-h-[44px]" style={{ flex:1, background:TOK.surface, border:`1px solid ${TOK.border}`, color:TOK.textSec, borderRadius:11, fontSize:13, fontWeight:700, cursor:'pointer' }}>Okumayı bitir</button>
               {hasNextNode && (
-                <button onClick={onNext} style={{ flex:1, padding:'13px 0', background:TOK.indigo, color:'#fff', borderRadius:11, fontSize:14, fontWeight:700, display:'flex', alignItems:'center', justifyContent:'center', gap:6, boxShadow:`0 8px 24px -8px ${TOK.indigo}60`, cursor:'pointer' }}>
+                <button onClick={onNext} className="min-h-[44px] flex items-center justify-center gap-1" style={{ flex:1, background:TOK.indigo, color:'#fff', borderRadius:11, fontSize:14, fontWeight:700, boxShadow:`0 8px 24px -8px ${TOK.indigo}60`, cursor:'pointer', border:'none' }}>
                   {TR.continue} <Ic.Arrow size={14}/>
                 </button>
               )}
@@ -755,14 +755,13 @@ export const QuizScreen = ({ node, onBack, onComplete, updateGrade, hasNextNode,
             </div>
           )}
           <div style={{ maxWidth: isDesktopMC ? undefined : 720, margin: isDesktopMC ? 0 : '0 auto', width: isDesktopMC ? undefined : '100%' }}>
-            <button onClick={handleMainBtn} disabled={btnDisabled && (exercise.type !== 'speaking' || speechSupported)} style={{
+            <button onClick={handleMainBtn} disabled={btnDisabled && (exercise.type !== 'speaking' || speechSupported)} className="min-h-[44px] flex items-center justify-center gap-1" style={{
               width: isDesktopMC && status !== 'playing' ? undefined : '100%',
-              padding: isDesktopMC ? '12px 28px' : '16px 0',
+              padding: isDesktopMC ? '12px 28px' : '14px 0',
               fontWeight:700, fontSize: isDesktopMC ? 14 : 17, borderRadius: isDesktopMC ? 9 : 14, border:'none',
               background:mainBtnBg, color:mainBtnColor,
               cursor: btnDisabled && (exercise.type !== 'speaking' || speechSupported) ? 'not-allowed' : 'pointer',
               boxShadow: mainBtnBg !== TOK.surface4 ? `0 0 20px -8px ${mainBtnBg}80` : 'none', transition:'all 0.2s',
-              display:'flex', alignItems:'center', justifyContent:'center', gap:6,
             }}>
               {btnLabel} {status !== 'playing' && status !== 'incorrect' && <Ic.Arrow size={14}/>}
             </button>
@@ -815,22 +814,22 @@ export const WorkshopScreen = ({ node, onBack, onComplete, user }) => {
   const ctaBar = (
     <>
       {status === 'idle' && (
-        <button onClick={handleSubmit} disabled={text.length < 50} style={{ width:'100%', background: text.length >= 50 ? TOK.amber : TOK.surface4, color: text.length >= 50 ? TOK.bg : TOK.textMute, fontWeight:700, padding:'14px 0', borderRadius:12, fontSize:14, border:'none', display:'flex', alignItems:'center', justifyContent:'center', gap:8, cursor: text.length < 50 ? 'not-allowed' : 'pointer', boxShadow: text.length >= 50 ? `0 0 20px -6px ${TOK.amber}60` : 'none', transition:'all 0.3s' }}>
+        <button onClick={handleSubmit} disabled={text.length < 50} className="min-h-[44px] w-full flex items-center justify-center gap-2" style={{ background: text.length >= 50 ? TOK.amber : TOK.surface4, color: text.length >= 50 ? TOK.bg : TOK.textMute, fontWeight:700, borderRadius:12, fontSize:14, border:'none', cursor: text.length < 50 ? 'not-allowed' : 'pointer', boxShadow: text.length >= 50 ? `0 0 20px -6px ${TOK.amber}60` : 'none', transition:'all 0.3s' }}>
           <Ic.Send size={16}/> Öğretmene gönder
         </button>
       )}
       {status === 'loading' && (
-        <div style={{ width:'100%', background:TOK.indigoSoft, color:TOK.indigoHi, fontWeight:700, padding:'14px 0', borderRadius:12, fontSize:14, border:`1px solid ${TOK.indigo}40`, display:'flex', alignItems:'center', justifyContent:'center', gap:8 }}>
+        <div className="min-h-[44px] w-full flex items-center justify-center gap-2" style={{ background:TOK.indigoSoft, color:TOK.indigoHi, fontWeight:700, borderRadius:12, fontSize:14, border:`1px solid ${TOK.indigo}40` }}>
           <Ic.Loader2 size={16} style={{ animation:'spin 1s linear infinite' }}/> Kaydediliyor...
         </div>
       )}
       {status === 'submitted' && (
-        <div style={{ width:'100%', background:TOK.amberSoft, color:TOK.amber, fontWeight:700, padding:'14px 0', borderRadius:12, fontSize:14, border:`1px solid ${TOK.amber}40`, display:'flex', alignItems:'center', justifyContent:'center', gap:8 }}>
+        <div className="min-h-[44px] w-full flex items-center justify-center gap-2" style={{ background:TOK.amberSoft, color:TOK.amber, fontWeight:700, borderRadius:12, fontSize:14, border:`1px solid ${TOK.amber}40` }}>
           <Ic.Info size={16}/> Gönderildi. Düzeltme bekleniyor...
         </div>
       )}
       {status === 'graded' && (
-        <button onClick={onComplete} style={{ width:'100%', background:TOK.green, color:TOK.bg, fontWeight:700, padding:'14px 0', borderRadius:12, fontSize:14, border:'none', display:'flex', alignItems:'center', justifyContent:'center', gap:8, cursor:'pointer', boxShadow:`0 0 24px -8px ${TOK.green}60` }}>
+        <button onClick={onComplete} className="min-h-[44px] w-full flex items-center justify-center gap-2" style={{ background:TOK.green, color:TOK.bg, fontWeight:700, borderRadius:12, fontSize:14, border:'none', cursor:'pointer', boxShadow:`0 0 24px -8px ${TOK.green}60` }}>
           <Ic.CheckCircle2 size={16}/> Haritaya dön
         </button>
       )}

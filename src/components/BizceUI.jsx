@@ -43,9 +43,9 @@ export const Ic = {
 
 // ── Responsive hook ────────────────────────────────────────────────────────
 export function useIsMobile() {
-  const [m, setM] = useState(() => window.innerWidth < 768);
+  const [m, setM] = useState(() => window.innerWidth < 1024);
   useEffect(() => {
-    const fn = () => setM(window.innerWidth < 768);
+    const fn = () => setM(window.innerWidth < 1024);
     window.addEventListener('resize', fn);
     return () => window.removeEventListener('resize', fn);
   }, []);

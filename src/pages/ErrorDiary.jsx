@@ -101,62 +101,66 @@ export default function ErrorDiary({ onBack, db, user }) {
     <div style={{ minHeight: '100vh', background: TOK.bg, color: TOK.text, fontFamily: TOK.sans }}>
 
       {/* ── Header ── */}
-      <div style={{
-        height: 60, padding: '0 28px', borderBottom: `1px solid ${TOK.border}`,
+      <div className="px-3 md:px-7 gap-3 md:gap-4" style={{
+        height: 60, borderBottom: `1px solid ${TOK.border}`,
         background: 'rgba(17,17,24,0.9)', backdropFilter: 'blur(12px)',
-        display: 'flex', alignItems: 'center', gap: 16,
+        display: 'flex', alignItems: 'center',
         position: 'sticky', top: 0, zIndex: 40,
       }}>
-        <button onClick={onBack} style={{
-          display: 'flex', alignItems: 'center', gap: 8,
+        <button onClick={onBack} className="min-h-[44px] flex items-center gap-2 px-3" style={{
           background: TOK.surface3, border: `1px solid ${TOK.border}`,
-          borderRadius: 8, padding: '6px 11px', color: TOK.textDim, cursor: 'pointer',
+          borderRadius: 8, color: TOK.textDim, cursor: 'pointer', flexShrink: 0,
         }}>
           <Ic.Back size={15} />
-          <span style={{ fontFamily: TOK.mono, fontSize: 11, fontWeight: 700 }}>Volver</span>
+          <span className="hidden sm:inline" style={{ fontFamily: TOK.mono, fontSize: 11, fontWeight: 700 }}>Volver</span>
         </button>
 
-        <div>
-          <div style={{ fontFamily: TOK.mono, fontSize: 9.5, color: TOK.coral, letterSpacing: 2, textTransform: 'uppercase' }}>
+        <div style={{ flex: 1, minWidth: 0 }}>
+          <div className="hidden sm:block" style={{ fontFamily: TOK.mono, fontSize: 9.5, color: TOK.coral, letterSpacing: 2, textTransform: 'uppercase' }}>
             Bizce · Aprendizaje
           </div>
-          <div style={{ fontFamily: TOK.serif, fontStyle: 'italic', fontSize: 18, fontWeight: 500, marginTop: 1 }}>
+          <div className="text-sm md:text-[18px]" style={{ fontFamily: TOK.serif, fontStyle: 'italic', fontWeight: 500, marginTop: 1 }}>
             Diario de Errores
           </div>
         </div>
-
-        <div style={{ marginLeft: 'auto', display: 'flex', gap: 5 }}>
-          {TABS.map(t => (
-            <button key={t.id} onClick={() => setTab(t.id)} style={{
-              padding: '6px 14px', borderRadius: 8,
-              fontWeight: 700, fontSize: 12, cursor: 'pointer',
-              background: tab === t.id ? TOK.surface3 : 'transparent',
-              color:      tab === t.id ? TOK.text    : TOK.textDim,
-              border: `1px solid ${tab === t.id ? TOK.border : 'transparent'}`,
-              display: 'flex', alignItems: 'center', gap: 5,
-            }}>
-              {t.label}
-              {t.id === 'errors' && (
-                <span style={{ fontFamily: TOK.mono, fontSize: 10, opacity: 0.6 }}>{errors.length}</span>
-              )}
-              {t.id === 'review' && (
-                <span style={{ fontFamily: TOK.mono, fontSize: 10, opacity: 0.6 }}>{pendingFlash.length}</span>
-              )}
-            </button>
-          ))}
-        </div>
       </div>
 
-      <div style={{ maxWidth: 900, margin: '0 auto', padding: '32px 28px' }}>
+      {/* ── Tab strip (below header, scrollable on mobile) ── */}
+      <div className="flex overflow-x-auto noscroll px-3 md:px-7 gap-1" style={{
+        borderBottom: `1px solid ${TOK.border}`,
+        background: 'rgba(17,17,24,0.9)', backdropFilter: 'blur(12px)',
+        position: 'sticky', top: 60, zIndex: 30,
+      }}>
+        {TABS.map(t => (
+          <button key={t.id} onClick={() => setTab(t.id)} className="flex items-center gap-1 shrink-0 min-h-[40px]" style={{
+            padding: '0 14px', borderRadius: 0,
+            fontWeight: 700, fontSize: 12, cursor: 'pointer',
+            background: 'transparent',
+            color: tab === t.id ? TOK.indigoHi : TOK.textDim,
+            border: 'none',
+            borderBottom: `2px solid ${tab === t.id ? TOK.indigo : 'transparent'}`,
+          }}>
+            {t.label}
+            {t.id === 'errors' && (
+              <span style={{ fontFamily: TOK.mono, fontSize: 10, opacity: 0.6 }}>{errors.length}</span>
+            )}
+            {t.id === 'review' && (
+              <span style={{ fontFamily: TOK.mono, fontSize: 10, opacity: 0.6 }}>{pendingFlash.length}</span>
+            )}
+          </button>
+        ))}
+      </div>
+
+      <div className="max-w-[900px] mx-auto px-3 md:px-7 pt-5 md:pt-8 pb-10">
 
         {/* ─────────── TAB 1: Mis Errores ─────────── */}
         {tab === 'errors' && (
           <div>
             {/* Filter pills */}
-            <div style={{ display: 'flex', gap: 8, marginBottom: 20, flexWrap: 'wrap' }}>
+            <div className="flex gap-2 overflow-x-auto noscroll pb-2 mb-5">
               {['all', ...Object.keys(ERROR_TYPES)].map(t => (
-                <button key={t} onClick={() => setFilterType(t)} style={{
-                  padding: '5px 12px', borderRadius: 100, cursor: 'pointer',
+                <button key={t} onClick={() => setFilterType(t)} className="shrink-0 min-h-[36px]" style={{
+                  padding: '4px 12px', borderRadius: 100, cursor: 'pointer',
                   border: `1px solid ${filterType === t ? TOK.coral : TOK.border}`,
                   background: filterType === t ? TOK.coralSoft : TOK.surface,
                   color: filterType === t ? TOK.coral : TOK.textSec,
@@ -212,7 +216,7 @@ export default function ErrorDiary({ onBack, db, user }) {
                   </div>
                 )}
 
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                   <div style={{ padding: '9px 12px', background: TOK.coralSoft, borderRadius: 9, border: `1px solid ${TOK.coral}30` }}>
                     <div style={{ fontFamily: TOK.mono, fontSize: 9, color: TOK.coral, letterSpacing: 1, marginBottom: 4 }}>TU RESPUESTA</div>
                     <div style={{ fontFamily: TOK.serif, fontStyle: 'italic', fontSize: 14, color: TOK.coral, textDecoration: 'line-through' }}>
@@ -266,7 +270,7 @@ export default function ErrorDiary({ onBack, db, user }) {
                     <div style={{ fontFamily: TOK.serif, fontSize: 17, color: TOK.textSec, marginBottom: 20, lineHeight: 1.55 }}>
                       {currentFlash.question}
                     </div>
-                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10, marginBottom: 6 }}>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-1.5">
                       <div style={{ padding: '10px 14px', background: TOK.coralSoft, borderRadius: 10, border: `1px solid ${TOK.coral}30` }}>
                         <div style={{ fontFamily: TOK.mono, fontSize: 9, color: TOK.coral, letterSpacing: 1, marginBottom: 4 }}>DIJISTE</div>
                         <div style={{ fontFamily: TOK.serif, fontStyle: 'italic', fontSize: 15, color: TOK.coral, textDecoration: 'line-through' }}>
@@ -288,16 +292,16 @@ export default function ErrorDiary({ onBack, db, user }) {
                   </div>
                 )}
 
-                <div style={{ display: 'flex', gap: 10 }}>
-                  <button onClick={() => markNotYet(currentFlash.id)} style={{
-                    flex: 1, padding: '12px 0', background: TOK.coralSoft,
+                <div className="flex gap-2">
+                  <button onClick={() => markNotYet(currentFlash.id)} className="min-h-[48px]" style={{
+                    flex: 1, background: TOK.coralSoft,
                     border: `1px solid ${TOK.coral}40`, borderRadius: 10,
                     color: TOK.coral, fontWeight: 700, fontSize: 14, cursor: 'pointer',
                   }}>
                     Todavía no
                   </button>
-                  <button onClick={() => markKnown(currentFlash.id)} style={{
-                    flex: 1, padding: '12px 0', background: TOK.greenSoft,
+                  <button onClick={() => markKnown(currentFlash.id)} className="min-h-[48px]" style={{
+                    flex: 1, background: TOK.greenSoft,
                     border: `1px solid ${TOK.green}40`, borderRadius: 10,
                     color: TOK.green, fontWeight: 700, fontSize: 14, cursor: 'pointer',
                   }}>

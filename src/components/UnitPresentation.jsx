@@ -22,15 +22,15 @@ export default function UnitPresentation({ presentation, unitTitle, levelColor, 
         pointerEvents: 'none',
       }}/>
 
-      <div style={{ position: 'relative', maxWidth: 640, margin: '0 auto', padding: '28px 24px 80px' }}>
+      <div className="relative max-w-[640px] mx-auto px-4 md:px-6 pt-5 md:pt-7 pb-20">
 
         {/* Back button */}
         <button
           onClick={onBack}
+          className="flex items-center gap-1 min-h-[44px] px-3"
           style={{
-            display: 'flex', alignItems: 'center', gap: 6,
             background: TOK.surface3, border: `1px solid ${TOK.border}`,
-            borderRadius: 8, padding: '7px 12px',
+            borderRadius: 8,
             color: TOK.textDim, cursor: 'pointer',
             fontFamily: TOK.mono, fontSize: 11, fontWeight: 700,
           }}
@@ -39,7 +39,7 @@ export default function UnitPresentation({ presentation, unitTitle, levelColor, 
         </button>
 
         {/* Level badge */}
-        <div style={{ textAlign: 'center', marginTop: 32 }}>
+        <div style={{ textAlign: 'center', marginTop: 24 }}>
           <span style={{
             display: 'inline-block', padding: '4px 16px',
             background: `${levelColor}18`, color: levelColor,
@@ -52,20 +52,19 @@ export default function UnitPresentation({ presentation, unitTitle, levelColor, 
         </div>
 
         {/* Unit title */}
-        <h1 style={{
-          fontFamily: SERIF, fontSize: 34, fontWeight: 400,
-          letterSpacing: -1.3, textAlign: 'center',
-          marginTop: 16, marginBottom: 0, lineHeight: 1.1,
+        <h1 className="text-[26px] md:text-[34px] text-center mt-3 mb-0" style={{
+          fontFamily: SERIF, fontWeight: 400,
+          letterSpacing: -1.3, lineHeight: 1.1,
         }}>
           <em>{unitTitle}</em>
         </h1>
 
         {/* Subtitle */}
-        <div style={{ textAlign: 'center', marginTop: 14 }}>
-          <div style={{ fontFamily: SERIF, fontStyle: 'italic', fontSize: 17, color: TOK.textSec }}>
+        <div style={{ textAlign: 'center', marginTop: 12 }}>
+          <div className="text-sm md:text-[17px]" style={{ fontFamily: SERIF, fontStyle: 'italic', color: TOK.textSec }}>
             {subtitle}
           </div>
-          <div style={{ fontFamily: TOK.mono, fontSize: 10.5, color: TOK.textMute, marginTop: 5, letterSpacing: 0.5 }}>
+          <div className="hidden md:block" style={{ fontFamily: TOK.mono, fontSize: 10.5, color: TOK.textMute, marginTop: 5, letterSpacing: 0.5 }}>
             {subtitle_es}
           </div>
         </div>
@@ -93,18 +92,18 @@ export default function UnitPresentation({ presentation, unitTitle, levelColor, 
           }}>
             Ne öğreneceksin?
           </div>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
             {whatYouLearn.map((item, i) => (
               <div key={i} style={{
-                padding: '11px 15px',
+                padding: '10px 14px',
                 background: TOK.surface, borderRadius: 10,
                 border: `1px solid ${TOK.border}`,
                 borderLeft: `3px solid ${levelColor}60`,
               }}>
-                <div style={{ fontFamily: TOK.sans, fontSize: 13.5, fontWeight: 600, color: TOK.text }}>
+                <div className="text-sm md:text-[13.5px]" style={{ fontFamily: TOK.sans, fontWeight: 600, color: TOK.text }}>
                   {item.tr}
                 </div>
-                <div style={{ fontFamily: TOK.mono, fontSize: 10.5, color: TOK.textMute, marginTop: 3 }}>
+                <div className="hidden md:block" style={{ fontFamily: TOK.mono, fontSize: 10.5, color: TOK.textMute, marginTop: 3 }}>
                   {item.es}
                 </div>
               </div>
@@ -166,13 +165,11 @@ export default function UnitPresentation({ presentation, unitTitle, levelColor, 
         {/* Start button */}
         <button
           onClick={onStart}
+          className="w-full min-h-[52px] flex items-center justify-center gap-2 mt-7 md:mt-8"
           style={{
-            width: '100%', marginTop: 32, padding: '16px',
-            textAlign: 'center',
             background: `linear-gradient(135deg, ${levelColor}, ${levelColor}bb)`,
             color: '#fff', borderRadius: 12,
             fontFamily: SERIF, fontSize: 20, fontWeight: 400, letterSpacing: -0.3,
-            display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10,
             border: 'none', cursor: 'pointer',
             boxShadow: `0 10px 36px -10px ${levelColor}70`,
           }}

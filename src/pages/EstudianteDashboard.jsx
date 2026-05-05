@@ -72,38 +72,36 @@ const LevelsGrid = ({ onSelectLevel, progress, allCurriculums, currentLevelId })
   }));
 
   return (
-    <div style={{ display:'grid', gridTemplateColumns:'repeat(6,1fr)', gap:14 }}>
+    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3 lg:gap-4">
       {levels.map((l, i) => {
         const col = l.unlocked ? l.color : TOK.textMute;
         return (
           <div
             key={l.id}
             onClick={() => l.unlocked && onSelectLevel(l.id)}
-            className="hov animFadeUp"
+            className="hov animFadeUp relative flex flex-col justify-between min-h-[140px] md:min-h-[180px] lg:min-h-[220px] p-4 lg:p-5"
             style={{
               animationDelay: `${0.05 * i}s`,
-              position:'relative', padding:'22px 18px',
               background: l.current
                 ? `linear-gradient(180deg,${TOK.indigoSoft},${TOK.surface})`
                 : TOK.surface,
               border:`1px solid ${l.current ? TOK.indigo + '50' : TOK.border}`,
-              borderRadius:14, minHeight:220,
-              display:'flex', flexDirection:'column', justifyContent:'space-between',
+              borderRadius:14,
               boxShadow: l.current ? `0 0 30px -5px ${TOK.indigo}40` : 'none',
               cursor: l.unlocked ? 'pointer' : 'default',
               opacity: l.unlocked ? 1 : 0.55,
             }}
           >
             {l.current && (
-              <div style={{ position:'absolute', top:10, right:10, padding:'2px 7px', background:TOK.indigo, color:'#fff', borderRadius:4, fontFamily:TOK.mono, fontSize:9, fontWeight:700, letterSpacing:1 }}>ŞİMDİ</div>
+              <div style={{ position:'absolute', top:8, right:8, padding:'2px 7px', background:TOK.indigo, color:'#fff', borderRadius:4, fontFamily:TOK.mono, fontSize:9, fontWeight:700, letterSpacing:1 }}>ŞİMDİ</div>
             )}
             {!l.unlocked && (
-              <div style={{ position:'absolute', top:14, right:14, color:TOK.textMute }}><Ic.Lock size={13}/></div>
+              <div style={{ position:'absolute', top:10, right:10, color:TOK.textMute }}><Ic.Lock size={13}/></div>
             )}
             <div>
-              <div style={{ fontFamily:TOK.serif, fontSize:44, fontWeight:400, letterSpacing:-1.5, color:col, lineHeight:1 }}>{l.id}</div>
-              <div style={{ fontFamily:TOK.serif, fontStyle:'italic', fontSize:18, fontWeight:500, color:TOK.text, marginTop:6, letterSpacing:-0.4 }}>{l.name}</div>
-              <div style={{ fontFamily:TOK.mono, fontSize:9.5, color:TOK.textMute, letterSpacing:1.5, textTransform:'uppercase', marginTop:4 }}>{l.es}</div>
+              <div className="text-[28px] md:text-[36px] lg:text-[44px]" style={{ fontFamily:TOK.serif, fontWeight:400, letterSpacing:-1.5, color:col, lineHeight:1 }}>{l.id}</div>
+              <div className="text-sm md:text-base" style={{ fontFamily:TOK.serif, fontStyle:'italic', fontWeight:500, color:TOK.text, marginTop:6, letterSpacing:-0.4 }}>{l.name}</div>
+              <div className="hidden md:block" style={{ fontFamily:TOK.mono, fontSize:9.5, color:TOK.textMute, letterSpacing:1.5, textTransform:'uppercase', marginTop:4 }}>{l.es}</div>
             </div>
             <div>
               {l.unlocked && (
@@ -183,7 +181,7 @@ const MapTab = ({ progress, onSelectNode, curriculum }) => {
 
   const units    = curriculum?.units || [];
   const nodes    = selectedUnit?.nodes || [];
-  const isMobile = window.innerWidth < 768;
+  const isMobile = useIsMobile();
 
   // ── snake path node geometry ──────────────────────────────────────────────
   const NODE_H   = 96;
@@ -1221,7 +1219,7 @@ export const StudentDashboard = ({ progress, onSelectNode, onNavigate, user, log
       <div style={{ minHeight:'100vh', background:TOK.bg, color:TOK.text, fontFamily:TOK.sans, overflowX:'hidden' }}>
 
         {/* ── Top bar ──────────────────────────────────────────────────────── */}
-        <div style={{ height:60, padding:'0 28px', borderBottom:`1px solid ${TOK.border}`, background:'rgba(17,17,24,0.85)', backdropFilter:'blur(12px)', display:'flex', alignItems:'center', gap:24, position:'sticky', top:0, zIndex:40, flexShrink:0 }}>
+        <div className="px-3 md:px-7 gap-3 md:gap-6" style={{ height:60, borderBottom:`1px solid ${TOK.border}`, background:'rgba(17,17,24,0.85)', backdropFilter:'blur(12px)', display:'flex', alignItems:'center', position:'sticky', top:0, zIndex:40, flexShrink:0 }}>
 
           {/* Logo / back */}
           {activeTab === 'learn' && selectedLevel ? (
@@ -1237,7 +1235,7 @@ export const StudentDashboard = ({ progress, onSelectNode, onNavigate, user, log
 
           {/* Nav tabs — hidden when in map view */}
           {!(activeTab === 'learn' && selectedLevel) && (
-            <div style={{ display:'flex', gap:4, marginLeft:8 }}>
+            <div className="hidden md:flex gap-1 ml-2">
               {tabs.map(t => (
                 <button key={t.id} onClick={() => { setActiveTab(t.id); if (t.id !== 'learn') setSelectedLevel(null); }} style={{ padding:'7px 14px', borderRadius:8, fontSize:13, fontWeight: activeTab === t.id ? 700 : 500, color: activeTab === t.id ? TOK.text : TOK.textDim, background: activeTab === t.id ? TOK.surface3 : 'transparent', border: activeTab === t.id ? `1px solid ${TOK.border}` : '1px solid transparent', cursor:'pointer' }}>
                   {t.label}
@@ -1255,15 +1253,15 @@ export const StudentDashboard = ({ progress, onSelectNode, onNavigate, user, log
           <div style={{ flex:1 }}/>
 
           {/* Stats pills */}
-          <div style={{ display:'flex', gap:8, alignItems:'center' }}>
-            <div style={{ padding:'6px 11px', background:TOK.amberSoft, border:`1px solid ${TOK.amber}30`, borderRadius:7, color:TOK.amber, display:'flex', alignItems:'center', gap:5, fontSize:12.5, fontWeight:700 }}>
-              <Ic.Flame size={13}/> {streak}
+          <div className="flex items-center gap-1 md:gap-2">
+            <div className="flex items-center gap-1" style={{ padding:'5px 9px', background:TOK.amberSoft, border:`1px solid ${TOK.amber}30`, borderRadius:7, color:TOK.amber, fontSize:12, fontWeight:700 }}>
+              <Ic.Flame size={13}/> <span>{streak}</span>
             </div>
-            <div style={{ padding:'6px 11px', background:TOK.indigoSoft, border:`1px solid ${TOK.indigo}30`, borderRadius:7, color:TOK.indigoHi, display:'flex', alignItems:'center', gap:5, fontSize:12.5, fontWeight:700 }}>
-              <Ic.Diamond size={13}/> {points}
+            <div className="hidden sm:flex items-center gap-1" style={{ padding:'5px 9px', background:TOK.indigoSoft, border:`1px solid ${TOK.indigo}30`, borderRadius:7, color:TOK.indigoHi, fontSize:12, fontWeight:700 }}>
+              <Ic.Diamond size={13}/> <span>{points}</span>
             </div>
-            <div style={{ padding:'6px 11px', background:TOK.coralSoft, border:`1px solid ${TOK.coral}30`, borderRadius:7, color:TOK.coral, display:'flex', alignItems:'center', gap:5, fontSize:12.5, fontWeight:700 }}>
-              <Ic.Heart size={13}/> 5
+            <div className="hidden sm:flex items-center gap-1" style={{ padding:'5px 9px', background:TOK.coralSoft, border:`1px solid ${TOK.coral}30`, borderRadius:7, color:TOK.coral, fontSize:12, fontWeight:700 }}>
+              <Ic.Heart size={13}/> <span>5</span>
             </div>
             {/* Avatar + logout */}
             <button onClick={logout} title="Çıkış yap" style={{ width:32, height:32, borderRadius:8, background:`linear-gradient(135deg,${TOK.coral},${TOK.indigo})`, display:'flex', alignItems:'center', justifyContent:'center', fontSize:12, fontWeight:700, color:'#fff', border:'none', cursor:'pointer', marginLeft:4 }}>
@@ -1273,27 +1271,27 @@ export const StudentDashboard = ({ progress, onSelectNode, onNavigate, user, log
         </div>
 
         {/* ── Content ──────────────────────────────────────────────────────── */}
-        <div style={{ paddingBottom:80 }}>
+        <div className="pb-24">
 
           {/* LEARN — Levels home */}
           {activeTab === 'learn' && !selectedLevel && (
-            <div style={{ maxWidth:1100, margin:'0 auto', padding:'32px 40px 0' }}>
+            <div className="max-w-[1100px] mx-auto px-4 md:px-10 pt-5 md:pt-8">
 
               {/* Hero row */}
-              <div className="animFadeUp" style={{ display:'flex', alignItems:'flex-end', justifyContent:'space-between', marginBottom:28 }}>
+              <div className="animFadeUp flex flex-col md:flex-row md:items-end md:justify-between mb-5 md:mb-7">
                 <div>
-                  <div style={{ fontFamily:TOK.mono, fontSize:10.5, color:TOK.indigoHi, letterSpacing:2.2, textTransform:'uppercase', marginBottom:10 }}>{greeting} · {dateStr}</div>
-                  <h1 style={{ fontFamily:TOK.serif, fontSize:52, fontWeight:400, letterSpacing:-1.8, lineHeight:1, margin:0 }}>
+                  <div className="text-[9px] md:text-[10.5px] mb-2" style={{ fontFamily:TOK.mono, color:TOK.indigoHi, letterSpacing:2.2, textTransform:'uppercase' }}>{greeting} · {dateStr}</div>
+                  <h1 className="text-3xl md:text-5xl lg:text-[52px]" style={{ fontFamily:TOK.serif, fontWeight:400, letterSpacing:-1.8, lineHeight:1, margin:0 }}>
                     Hoş geldin, <em style={{ color:TOK.indigoHi, fontFamily:TOK.italic }}>{userName}</em>.
                   </h1>
-                  <p style={{ fontFamily:TOK.serif, fontSize:16, color:TOK.textSec, marginTop:14, fontWeight:300, maxWidth:560 }}>
+                  <p className="text-sm md:text-base mt-3 md:mt-4 max-w-[560px]" style={{ fontFamily:TOK.serif, color:TOK.textSec, fontWeight:300 }}>
                     {currentLevelId
                       ? `${currentLevelId} seviyesinin %${currentLevelPct}'indesin. Bugün birkaç derse ne dersin?`
                       : 'Öğrenmeye başlamak için bir seviye seç.'}
                   </p>
                 </div>
                 {currentLevelId && (
-                  <button onClick={() => setSelectedLevel(currentLevelId)} className="btn-pri hov" style={{ padding:'13px 22px', background:TOK.indigo, color:'#fff', borderRadius:10, fontSize:14, fontWeight:700, display:'flex', alignItems:'center', gap:8, cursor:'pointer', boxShadow:`0 8px 24px -8px ${TOK.indigo}80`, border:'none', flexShrink:0 }}>
+                  <button onClick={() => setSelectedLevel(currentLevelId)} className="btn-pri hov mt-4 md:mt-0" style={{ padding:'13px 22px', background:TOK.indigo, color:'#fff', borderRadius:10, fontSize:14, fontWeight:700, display:'flex', alignItems:'center', gap:8, cursor:'pointer', boxShadow:`0 8px 24px -8px ${TOK.indigo}80`, border:'none', flexShrink:0, alignSelf:'flex-end' }}>
                     Derse devam et <Ic.Arrow size={14}/>
                   </button>
                 )}
@@ -1308,7 +1306,7 @@ export const StudentDashboard = ({ progress, onSelectNode, onNavigate, user, log
               />
 
               {/* Stats row */}
-              <div style={{ marginTop:24, display:'grid', gridTemplateColumns:'1.4fr 1fr', gap:14, paddingBottom:32 }}>
+              <div className="mt-5 md:mt-6 grid grid-cols-1 md:grid-cols-[1.4fr_1fr] gap-3 md:gap-4 pb-6 md:pb-8">
 
                 {/* Weekly bars */}
                 <div className="animFadeUp" style={{ animationDelay:'0.5s', padding:22, background:TOK.surface, border:`1px solid ${TOK.border}`, borderRadius:14 }}>
@@ -1351,7 +1349,7 @@ export const StudentDashboard = ({ progress, onSelectNode, onNavigate, user, log
               </div>
 
               {/* ── Quick access ── */}
-              <div className="animFadeUp" style={{ animationDelay:'0.7s', marginTop:14, display:'grid', gridTemplateColumns:'repeat(3,1fr)', gap:14, paddingBottom:32 }}>
+              <div className="animFadeUp grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-4 pb-8" style={{ animationDelay:'0.7s', marginTop:14 }}>
                 {[
                   { route:'pronunciation', Icon:Ic.Mic,         label:'Laboratorio de Pronunciación', sub:'Web Speech · 880 frases', color:TOK.violet },
                   { route:'errorDiary',    Icon:Ic.AlertCircle,  label:'Diario de Errores',            sub:'Repaso flashcard',        color:TOK.coral  },
@@ -1395,9 +1393,9 @@ export const StudentDashboard = ({ progress, onSelectNode, onNavigate, user, log
         </div>
 
         {/* ── Bottom tab bar ────────────────────────────────────────────────── */}
-        <div style={{ position:'fixed', bottom:14, left:'50%', transform:'translateX(-50%)', width:'calc(100% - 48px)', maxWidth:560, padding:6, background:'rgba(17,17,24,.95)', backdropFilter:'blur(20px)', border:`1px solid ${TOK.border}`, borderRadius:18, display:'flex', zIndex:50, boxShadow:'0 -10px 40px -10px rgba(0,0,0,.5)' }}>
+        <div style={{ position:'fixed', bottom:10, left:'50%', transform:'translateX(-50%)', width:'calc(100% - 24px)', maxWidth:540, padding:4, background:'rgba(17,17,24,.95)', backdropFilter:'blur(20px)', border:`1px solid ${TOK.border}`, borderRadius:18, display:'flex', zIndex:50, boxShadow:'0 -10px 40px -10px rgba(0,0,0,.5)' }}>
           {tabs.map(t => (
-            <button key={t.id} onClick={() => { setActiveTab(t.id); if (t.id !== 'learn') setSelectedLevel(null); }} style={{ flex:1, padding:'9px 0', borderRadius:12, textAlign:'center', background: activeTab === t.id ? TOK.indigoSoft : 'transparent', color: activeTab === t.id ? TOK.indigoHi : TOK.textMute, display:'flex', flexDirection:'column', alignItems:'center', gap:3, border:'none', cursor:'pointer' }}>
+            <button key={t.id} onClick={() => { setActiveTab(t.id); if (t.id !== 'learn') setSelectedLevel(null); }} className="min-h-[44px]" style={{ flex:1, padding:'8px 0', borderRadius:12, textAlign:'center', background: activeTab === t.id ? TOK.indigoSoft : 'transparent', color: activeTab === t.id ? TOK.indigoHi : TOK.textMute, display:'flex', flexDirection:'column', alignItems:'center', gap:3, border:'none', cursor:'pointer' }}>
               <t.Icon size={17} sw={activeTab === t.id ? 2 : 1.6}/>
               <span style={{ fontFamily:TOK.sans, fontSize:9.5, fontWeight:700 }}>{t.label}</span>
             </button>

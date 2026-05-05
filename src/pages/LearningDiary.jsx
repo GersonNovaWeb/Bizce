@@ -163,32 +163,31 @@ export default function LearningDiary({ onBack, db, user, progress }) {
     <div style={{ minHeight: '100vh', background: TOK.bg, color: TOK.text, fontFamily: TOK.sans }}>
 
       {/* ── Header ── */}
-      <div style={{
-        height: 60, padding: '0 28px', borderBottom: `1px solid ${TOK.border}`,
+      <div className="px-3 md:px-7 gap-3 md:gap-4" style={{
+        height: 60, borderBottom: `1px solid ${TOK.border}`,
         background: 'rgba(17,17,24,0.9)', backdropFilter: 'blur(12px)',
-        display: 'flex', alignItems: 'center', gap: 16,
+        display: 'flex', alignItems: 'center',
         position: 'sticky', top: 0, zIndex: 40,
       }}>
-        <button onClick={onBack} style={{
-          display: 'flex', alignItems: 'center', gap: 8,
+        <button onClick={onBack} className="min-h-[44px] flex items-center gap-2 px-3" style={{
           background: TOK.surface3, border: `1px solid ${TOK.border}`,
-          borderRadius: 8, padding: '6px 11px', color: TOK.textDim, cursor: 'pointer',
+          borderRadius: 8, color: TOK.textDim, cursor: 'pointer', flexShrink: 0,
         }}>
           <Ic.Back size={15} />
-          <span style={{ fontFamily: TOK.mono, fontSize: 11, fontWeight: 700 }}>Volver</span>
+          <span className="hidden sm:inline" style={{ fontFamily: TOK.mono, fontSize: 11, fontWeight: 700 }}>Volver</span>
         </button>
-        <div>
-          <div style={{ fontFamily: TOK.mono, fontSize: 9.5, color: TOK.indigoHi, letterSpacing: 2, textTransform: 'uppercase' }}>
+        <div style={{ flex: 1 }}>
+          <div className="hidden sm:block" style={{ fontFamily: TOK.mono, fontSize: 9.5, color: TOK.indigoHi, letterSpacing: 2, textTransform: 'uppercase' }}>
             Bizce · Aprendizaje
           </div>
-          <div style={{ fontFamily: TOK.serif, fontStyle: 'italic', fontSize: 18, fontWeight: 500, marginTop: 1 }}>
+          <div className="text-sm md:text-[18px]" style={{ fontFamily: TOK.serif, fontStyle: 'italic', fontWeight: 500, marginTop: 1 }}>
             Diario de Aprendizaje
           </div>
         </div>
       </div>
 
-      <div style={{ maxWidth: 960, margin: '0 auto', padding: '32px 28px' }}>
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 300px', gap: 24 }}>
+      <div className="max-w-[960px] mx-auto px-3 md:px-7 pt-5 md:pt-8 pb-10">
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_300px] gap-6">
 
           {/* ── Left: entry + history ── */}
           <div>
@@ -210,11 +209,10 @@ export default function LearningDiary({ onBack, db, user, progress }) {
                   </div>
                   <div style={{ display: 'flex', gap: 10 }}>
                     {MOODS.map(m => (
-                      <button key={m.id} onClick={() => setMood(m.id)} style={{
-                        flex: 1, padding: '12px 6px', borderRadius: 10, cursor: 'pointer',
+                      <button key={m.id} onClick={() => setMood(m.id)} className="min-h-[44px] flex flex-col items-center justify-center gap-1 flex-1" style={{
+                        padding: '8px 4px', borderRadius: 10, cursor: 'pointer',
                         background: mood === m.id ? m.color + '20' : TOK.surface2,
                         border: `2px solid ${mood === m.id ? m.color : TOK.border}`,
-                        display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 5,
                       }}>
                         <span style={{ fontSize: 22 }}>{m.emoji}</span>
                         <span style={{ fontFamily: TOK.mono, fontSize: 9, fontWeight: 700, color: mood === m.id ? m.color : TOK.textMute }}>
@@ -239,11 +237,10 @@ export default function LearningDiary({ onBack, db, user, progress }) {
                   onBlur={e  => e.target.style.borderColor = TOK.border}
                 />
 
-                <button onClick={handleSave} disabled={isSaving} style={{
-                  marginTop: 14, padding: '10px 20px', background: TOK.indigo,
+                <button onClick={handleSave} disabled={isSaving} className="min-h-[44px] flex items-center gap-2" style={{
+                  marginTop: 14, padding: '0 20px', background: TOK.indigo,
                   border: 'none', borderRadius: 9, color: '#fff',
                   fontWeight: 700, fontSize: 13, cursor: 'pointer',
-                  display: 'flex', alignItems: 'center', gap: 6,
                   opacity: isSaving ? 0.7 : 1,
                 }}>
                   <Ic.Save size={14} />

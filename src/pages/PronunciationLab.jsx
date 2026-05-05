@@ -79,43 +79,42 @@ export default function PronunciationLab({ onBack }) {
     <div style={{ minHeight: '100vh', background: TOK.bg, color: TOK.text, fontFamily: TOK.sans }}>
 
       {/* ── Header ── */}
-      <div style={{
-        height: 60, padding: '0 28px', borderBottom: `1px solid ${TOK.border}`,
+      <div className="px-3 md:px-7 gap-3 md:gap-4" style={{
+        height: 60, borderBottom: `1px solid ${TOK.border}`,
         background: 'rgba(17,17,24,0.9)', backdropFilter: 'blur(12px)',
-        display: 'flex', alignItems: 'center', gap: 16,
+        display: 'flex', alignItems: 'center',
         position: 'sticky', top: 0, zIndex: 40,
       }}>
-        <button onClick={onBack} style={{
-          display: 'flex', alignItems: 'center', gap: 8,
+        <button onClick={onBack} className="min-h-[44px] flex items-center gap-2 px-3" style={{
           background: TOK.surface3, border: `1px solid ${TOK.border}`,
-          borderRadius: 8, padding: '6px 11px', color: TOK.textDim, cursor: 'pointer',
+          borderRadius: 8, color: TOK.textDim, cursor: 'pointer', flexShrink: 0,
         }}>
           <Ic.Back size={15} />
-          <span style={{ fontFamily: TOK.mono, fontSize: 11, fontWeight: 700 }}>Volver</span>
+          <span className="hidden sm:inline" style={{ fontFamily: TOK.mono, fontSize: 11, fontWeight: 700 }}>Volver</span>
         </button>
-        <div style={{ flex: 1 }}>
-          <div style={{ fontFamily: TOK.mono, fontSize: 9.5, color: TOK.indigoHi, letterSpacing: 2, textTransform: 'uppercase' }}>
+        <div style={{ flex: 1, minWidth: 0 }}>
+          <div className="hidden sm:block" style={{ fontFamily: TOK.mono, fontSize: 9.5, color: TOK.indigoHi, letterSpacing: 2, textTransform: 'uppercase' }}>
             Bizce · Pronunciación
           </div>
-          <div style={{ fontFamily: TOK.serif, fontStyle: 'italic', fontSize: 18, fontWeight: 500, marginTop: 1 }}>
+          <div className="text-sm md:text-[18px]" style={{ fontFamily: TOK.serif, fontStyle: 'italic', fontWeight: 500, marginTop: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
             Laboratorio de Pronunciación
           </div>
         </div>
         {sessionAvg !== null && (
           <div style={{
-            padding: '6px 12px', background: TOK.indigoSoft,
-            border: `1px solid ${TOK.indigo}40`, borderRadius: 8,
+            padding: '5px 10px', background: TOK.indigoSoft,
+            border: `1px solid ${TOK.indigo}40`, borderRadius: 8, flexShrink: 0,
             fontFamily: TOK.mono, fontSize: 11, color: TOK.indigoHi, fontWeight: 700,
           }}>
-            Sesión: {sessionAvg}% · {scores.length} intentos
+            {sessionAvg}% · {scores.length}
           </div>
         )}
       </div>
 
       {/* ── No-speech banner ── */}
       {!hasSpeech && (
-        <div style={{
-          margin: '20px 28px 0', padding: '12px 18px',
+        <div className="mx-3 md:mx-7 mt-4" style={{
+          padding: '12px 16px',
           background: TOK.coralSoft, border: `1px solid ${TOK.coral}40`,
           borderRadius: 10, display: 'flex', alignItems: 'center', gap: 10, color: TOK.coral,
         }}>
@@ -126,21 +125,21 @@ export default function PronunciationLab({ onBack }) {
         </div>
       )}
 
-      <div style={{ maxWidth: 1100, margin: '0 auto', padding: '24px 28px' }}>
+      <div className="max-w-[1100px] mx-auto px-3 md:px-7 pt-5 md:pt-6">
 
         {/* ── Category pills ── */}
-        <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginBottom: 24 }}>
+        <div className="flex gap-2 overflow-x-auto pb-2 mb-5 noscroll">
           {categories.map(cat => (
             <button
               key={cat.id}
               onClick={() => setCategory(cat.id)}
+              className="flex items-center gap-1 min-h-[36px] shrink-0"
               style={{
-                padding: '5px 12px', borderRadius: 100, cursor: 'pointer',
+                padding: '4px 11px', borderRadius: 100, cursor: 'pointer',
                 border: `1px solid ${category === cat.id ? TOK.indigo : TOK.border}`,
                 background: category === cat.id ? TOK.indigoSoft : TOK.surface,
                 color: category === cat.id ? TOK.indigoHi : TOK.textSec,
                 fontFamily: TOK.mono, fontSize: 10.5, fontWeight: 700,
-                display: 'flex', alignItems: 'center', gap: 5,
               }}
             >
               {cat.label}
@@ -150,7 +149,7 @@ export default function PronunciationLab({ onBack }) {
         </div>
 
         {/* ── Cards grid ── */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: 14 }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: 12 }}>
           {filtered.map(item => {
             const isActive  = item.id === activeId;
             const hasResult = isActive && result;
@@ -210,14 +209,14 @@ export default function PronunciationLab({ onBack }) {
                 )}
 
                 {/* Actions */}
-                <div style={{ display: 'flex', gap: 8 }}>
+                <div className="flex gap-2">
                   <button
                     onClick={() => playSpeech(item.es)}
+                    className="min-h-[44px] flex items-center gap-1"
                     style={{
                       padding: '8px 12px', background: TOK.surface3,
                       border: `1px solid ${TOK.border}`, borderRadius: 8,
-                      color: TOK.textDim, cursor: 'pointer',
-                      display: 'flex', alignItems: 'center', gap: 5, fontSize: 12,
+                      color: TOK.textDim, cursor: 'pointer', fontSize: 12,
                     }}
                   >
                     <Ic.Volume size={14} /> Escuchar
@@ -225,10 +224,10 @@ export default function PronunciationLab({ onBack }) {
                   {hasSpeech && (
                     <button
                       onClick={() => isActive && isRecording ? stopRecording() : startRecording(item)}
+                      className="min-h-[44px] flex-1 flex items-center justify-center gap-1"
                       style={{
-                        flex: 1, padding: '8px 12px', borderRadius: 8, cursor: 'pointer',
+                        borderRadius: 8, cursor: 'pointer',
                         fontWeight: 700, fontSize: 12, border: 'none',
-                        display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6,
                         background: isActive && isRecording ? TOK.coral : TOK.indigo,
                         color: '#fff',
                         boxShadow: isActive && isRecording ? `0 0 16px -4px ${TOK.coral}80` : 'none',
