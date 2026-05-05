@@ -8,6 +8,7 @@ import { doc, setDoc, getDoc, serverTimestamp } from 'firebase/firestore';
 import { db } from '../firebase';
 import { TOK, TR } from '../tokens';
 import { Ic, ABar, useIsMobile } from '../components/BizceUI';
+import { TurkishErrorDetector } from '../components/TurkishErrorDetector';
 
 const SERIF  = '"Fraunces", "Instrument Serif", Georgia, serif';
 const ITALIC = '"Instrument Serif", Georgia, serif';
@@ -867,9 +868,14 @@ export const WorkshopScreen = ({ node, onBack, onComplete, user }) => {
 
             <div style={{ background:TOK.surface, border:`1px solid ${TOK.border}`, borderRadius:12, padding:'14px 16px', minHeight:260 }}>
               <div style={{ fontFamily:TOK.mono, fontSize:9.5, color:TOK.textMute, letterSpacing:1.5, textTransform:'uppercase', fontWeight:700, marginBottom:8 }}>{node.title}</div>
-              <textarea value={text} onChange={e => setText(e.target.value)} disabled={status !== 'idle'}
+              <TurkishErrorDetector
+                value={text}
+                onChange={e => setText(e.target.value)}
+                disabled={status !== 'idle'}
                 placeholder="Metni buraya yaz (en az 50 karakter)..."
                 style={{ width:'100%', background:'transparent', border:'none', outline:'none', resize:'none', fontFamily:TOK.serif, fontStyle:'italic', fontSize:14, lineHeight:1.6, color:TOK.text, minHeight:200, opacity: status !== 'idle' ? 0.65 : 1 }}
+                db={db}
+                user={user}
               />
             </div>
           </div>
@@ -923,9 +929,13 @@ export const WorkshopScreen = ({ node, onBack, onComplete, user }) => {
             {status !== 'idle' ? (
               <p style={{ fontFamily:TOK.serif, fontStyle:'italic', fontSize:17, lineHeight:1.65, color:TOK.textSec, whiteSpace:'pre-wrap', margin:0 }}>{text}</p>
             ) : (
-              <textarea value={text} onChange={e => setText(e.target.value)}
+              <TurkishErrorDetector
+                value={text}
+                onChange={e => setText(e.target.value)}
                 placeholder="Metni buraya yaz (en az 50 karakter)..."
                 style={{ width:'100%', background:'transparent', border:'none', outline:'none', resize:'none', fontFamily:TOK.serif, fontStyle:'italic', fontSize:17, lineHeight:1.65, color:TOK.text, minHeight:200 }}
+                db={db}
+                user={user}
               />
             )}
           </div>

@@ -12,6 +12,7 @@ import { playSpeech } from '../utils/audio';
 import logo from '../assets/logo.png';
 import { TOK, TR } from '../tokens';
 import { Ic, ABar, ProgressRing, BizceWordmark, PulseDot, useIsMobile } from '../components/BizceUI';
+import { TurkishErrorDetector } from '../components/TurkishErrorDetector';
 import UnitPresentation from '../components/UnitPresentation';
 import { unitPresentationsA1 } from '../data/presentaciones/A1';
 import { unitPresentationsA2 } from '../data/presentaciones/A2';
@@ -764,7 +765,17 @@ const LibraryTab = ({ user }) => {
               <input type="text" value={currentNoteTitle} onChange={e => setCurrentNoteTitle(e.target.value)} style={{ flex: 1, background: 'transparent', border: 'none', borderBottom: `2px solid ${TOK.border}`, padding: '4px 0', fontFamily: TOK.serif, fontSize: 22, fontWeight: 700, color: TOK.text, outline: 'none' }} onFocus={e => e.target.style.borderColor = TOK.indigo} onBlur={e => e.target.style.borderColor = TOK.border} placeholder="Título de la nota..." />
               <button onClick={handleSaveCurrentNote} style={{ padding: '6px 11px', background: TOK.indigo, border: 'none', borderRadius: 7, color: '#fff', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 5, fontSize: 12, fontWeight: 700 }}><Ic.Save size={12} /> Kaydet</button>
             </div>
-            <textarea value={currentNoteContent} onChange={e => setCurrentNoteContent(e.target.value)} placeholder="Contenido de la nota..." style={{ flex: 1, width: '100%', background: TOK.bg, border: `1px solid ${TOK.border}`, borderRadius: 10, padding: '16px 18px', fontFamily: TOK.serif, fontStyle: 'italic', fontSize: 16, color: TOK.textSec, resize: 'none', outline: 'none', lineHeight: 1.7 }} onFocus={e => e.target.style.borderColor = TOK.indigo} onBlur={e => e.target.style.borderColor = TOK.border} />
+            <TurkishErrorDetector
+              value={currentNoteContent}
+              onChange={e => setCurrentNoteContent(e.target.value)}
+              placeholder="Contenido de la nota..."
+              wrapperStyle={{ flex: 1, minHeight: 0, overflow: 'auto' }}
+              style={{ width: '100%', background: TOK.bg, border: `1px solid ${TOK.border}`, borderRadius: 10, padding: '16px 18px', fontFamily: TOK.serif, fontStyle: 'italic', fontSize: 16, color: TOK.textSec, resize: 'none', outline: 'none', lineHeight: 1.7, minHeight: 180 }}
+              onFocus={e => e.target.style.borderColor = TOK.indigo}
+              onBlur={e => e.target.style.borderColor = TOK.border}
+              db={db}
+              user={user}
+            />
           </div>
         )}
 
